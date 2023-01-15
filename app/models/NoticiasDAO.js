@@ -5,13 +5,12 @@ function NoticiasDAO(connection){
 		this._connection.query('select * from noticias ORDER BY data_criacao DESC', callback);
 	}
 
-
 	NoticiasDAO.prototype.getNoticia = function(id_noticia, callback){
 	this._connection.query('select * from noticias where id_noticia = ' + id_noticia.id_noticia, callback);
     }
 
 	NoticiasDAO.prototype.salvarNoticia = function(noticia, img_name, callback){
-		this._connection.query("insert noticias set titulo = '" + noticia.titulo +"', resumo = '" + noticia.resumo + "', autor = '" + noticia.autor + "', noticia = '" + noticia.noticia + "', imagem='" + img_name + "'", callback);
+		this._connection.query("insert noticias set categoria = '" + noticia.categoria +"', titulo = '" + noticia.titulo +"', resumo = '" + noticia.resumo + "', noticia = '" + noticia.noticia + "', autor = '" + noticia.autor + "', imagem='" + img_name + "'", callback);
 	}
 
 	NoticiasDAO.prototype.get5UltimasNoticias = function(callback){
@@ -27,7 +26,7 @@ function NoticiasDAO(connection){
     }
 
     NoticiasDAO.prototype.atualizarNoticia = function(noticia, img_name, callback){
-	this._connection.query("update noticias set titulo = '" + noticia.titulo +"', resumo = '" + noticia.resumo + "', autor = '" + noticia.autor + "', noticia = '" + noticia.noticia + "', imagem = '" + img_name + "' where id_noticia = " + noticia.id_noticia, callback);
+	this._connection.query("update noticias set categoria = '" + noticia.categoria +"', titulo = '" + noticia.titulo +"', resumo = '" + noticia.resumo + "', noticia = '" + noticia.noticia + "', autor = '" + noticia.autor + "', imagem='" + img_name + "' where id_noticia = " + noticia.id_noticia, callback);
     }
 
     NoticiasDAO.prototype.mostraNoticia = function(id_noticia, callback){

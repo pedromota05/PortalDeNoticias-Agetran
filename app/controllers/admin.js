@@ -12,12 +12,13 @@ module.exports.formulario_inclusao_noticia = function(app, req, res){
 module.exports.noticias_salvar = function(app, req, res){
 if (req.session.loggedin1) {
 		var noticia = req.body;
+		req.assert('categoria', 'Categoria é obrigatório').notEmpty();
 		req.assert('titulo', 'Título é obrigatório').notEmpty();
 		req.assert('resumo', 'Resumo é obrigatório').notEmpty();
 		req.assert('resumo', 'Resumo deve conter entre 10 e 100 caracteres').len(10,100);
+		req.assert('noticia', 'Notícia é obrigatório').notEmpty();
 		req.assert('autor','Autor é obrigatório').notEmpty();
 		req.assert('data_noticia', 'Data é obrigatório').notEmpty();
-		req.assert('noticia', 'Notícia é obrigatório').notEmpty();
 		var erros = req.validationErrors();	
 		if (erros){
 			console.log(erros);
@@ -27,12 +28,7 @@ if (req.session.loggedin1) {
 		}
 
 		var file = req.files.uploaded_image;
-
-
 		var img_name=file.name; 
-
-
-
 		file.mv('app/public/images/upload_images/'+img_name, function(err){
 
 			    var connection = app.config.dbConnection();
@@ -40,10 +36,7 @@ if (req.session.loggedin1) {
 				noticiasModel.salvarNoticia(noticia, img_name, function(error, result){
 				res.redirect('/noticias');
 		        });
-
-
 		});
-
 }
 else{
 	 res.redirect('/noticias');
@@ -54,12 +47,13 @@ module.exports.noticias_atualizar = function(app, req, res){
 if (req.session.loggedin1) {
 	var noticia = req.body;
 	var id_noticia = req.body.id_noticia;
-
+		req.assert('categoria', 'Categoria é obrigatório').notEmpty();
 		req.assert('titulo', 'Titulo é obrigatório').notEmpty();
 		req.assert('resumo', 'Resumo é obrigatório').notEmpty();
 		req.assert('resumo', 'Resumo deve conter entre 10 e 100 caracteres').len(10,100);
+		req.assert('noticia', 'Notícia é obrigatório').notEmpty();
 		req.assert('autor', 'Autor é obrigatório').notEmpty();
-		req.assert('noticia', 'Notícia é obrigatório').notEmpty();		
+		req.assert('data_noticia', 'Data é obrigatório').notEmpty();	
 		var erros = req.validationErrors();
 
 		if(erros){

@@ -45,6 +45,24 @@ module.exports.noticia = function(app, req, res){
   
 }
 
+module.exports.noticia_cliente = function(app, req, res){
+	var connection = app.config.dbConnection();
+	var noticiasModel = new app.app.models.NoticiasDAO(connection);
+
+		if (req.query.id_noticia){
+			var id_noticia = req.query; //id_noticia recebe o parâmetro enviado pelas views,
+			    //que contém o id da notícia a ser exibida
+		} else{
+			res.redirect('/');
+			return;
+		}
+
+		 noticiasModel.getNoticia(id_noticia,function(error, result){
+			res.render('noticia_cliente',{noticia:result});
+		});
+  
+}
+
 module.exports.busca = function(app, req, res){
 	if ((req.session.loggedin)||(req.session.loggedin1)) {
 		var pesquisa = req.body.pesquisa;
